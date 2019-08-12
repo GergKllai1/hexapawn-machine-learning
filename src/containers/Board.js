@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./Board.css";
-import whitePawn from "./assets/whitePawn.png";
-import blackPawn from "./assets/blackPawn.png";
+import whitePawn from "../assets/whitePawn.png";
+import blackPawn from "../assets/blackPawn.png";
+import Pawn from "../componets/Pawn";
 
 export class Board extends Component {
   render() {
@@ -9,25 +10,25 @@ export class Board extends Component {
       <div className="board-container">
         <div className="board">
           <div className="a black field">
-            <img className="pawn" src={blackPawn} alt="" />
+            <Pawn pawn={blackPawn} />
           </div>
           <div className="b white field">
-            <img className="pawn" src={blackPawn} alt="" />
+            <Pawn pawn={blackPawn} />
           </div>
           <div className="c black field">
-            <img className="pawn" src={blackPawn} alt="" />
+            <Pawn pawn={blackPawn} />
           </div>
           <div className="d white field" />
           <div className="e black field" />
           <div className="f white field" />
           <div className="g black field">
-            <img className="pawn" src={whitePawn} alt="" />
+            <Pawn pawn={whitePawn} />
           </div>
           <div className="h white field">
-            <img className="pawn" src={whitePawn} alt="" />
+            <Pawn pawn={whitePawn} />
           </div>
           <div className="i black field">
-            <img className="pawn" src={whitePawn} alt="" />
+            <Pawn pawn={whitePawn} />
           </div>
         </div>
       </div>
