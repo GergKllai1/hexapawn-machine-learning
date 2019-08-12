@@ -1,20 +1,34 @@
 import React, { Component } from "react";
 import "./Board.css";
+import whitePawn from "./assets/whitePawn.png";
+import blackPawn from "./assets/blackPawn.png";
 
 export class Board extends Component {
   render() {
     return (
-      <div className='board-container'>
+      <div className="board-container">
         <div className="board">
-          <div className="a black" />
-          <div className="b white" />
-          <div className="c black" />
-          <div className="d white" />
-          <div className="e black" />
-          <div className="f white" />
-          <div className="g black" />
-          <div className="h white" />
-          <div className="i black" />
+          <div className="a black field">
+            <img className="pawn" src={blackPawn} alt="" />
+          </div>
+          <div className="b white field">
+            <img className="pawn" src={blackPawn} alt="" />
+          </div>
+          <div className="c black field">
+            <img className="pawn" src={blackPawn} alt="" />
+          </div>
+          <div className="d white field" />
+          <div className="e black field" />
+          <div className="f white field" />
+          <div className="g black field">
+            <img className="pawn" src={whitePawn} alt="" />
+          </div>
+          <div className="h white field">
+            <img className="pawn" src={whitePawn} alt="" />
+          </div>
+          <div className="i black field">
+            <img className="pawn" src={whitePawn} alt="" />
+          </div>
         </div>
       </div>
     );
