@@ -1,0 +1,33 @@
+.board-container {
+  width: 100wv;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  border: 3px solid black;
+  width: 500px;
+  height: 500px;
+  display: grid;
+  grid-template-areas:
+    "a b c"
+    "d e f"
+    "g h i";
+}
+
+.black {
+  background-color: black;
+}
+
+.white {
+  background-color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .board {
+    width: 300px;
+    height: 300px;
+  }
+}
