@@ -5,32 +5,31 @@ import blackPawn from "../assets/blackPawn.png";
 import Pawn from "../componets/Pawn";
 
 export class Board extends Component {
+  state = {
+    board: [
+      { location: "a1", color: "black", pawn: blackPawn },
+      { location: "a2", color: "white", pawn: blackPawn },
+      { location: "a3", color: "black", pawn: blackPawn },
+      { location: "b1", color: "white", pawn: null },
+      { location: "b2", color: "black", pawn: null },
+      { location: "b3", color: "white", pawn: null },
+      { location: "c1", color: "black", pawn: whitePawn },
+      { location: "c2", color: "white", pawn: whitePawn },
+      { location: "c3", color: "black", pawn: whitePawn }
+    ]
+  };
+
   render() {
+    const boardWithPieces = this.state.board.map(b => {
+      return (
+        <div className={`${b.location} ${b.color} field `}>
+          <Pawn pawn={b.pawn} />
+        </div>
+      );
+    });
     return (
       <div className="board-container">
-        <div className="board">
-          <div className="a black field">
-            <Pawn pawn={blackPawn} />
-          </div>
-          <div className="b white field">
-            <Pawn pawn={blackPawn} />
-          </div>
-          <div className="c black field">
-            <Pawn pawn={blackPawn} />
-          </div>
-          <div className="d white field" />
-          <div className="e black field" />
-          <div className="f white field" />
-          <div className="g black field">
-            <Pawn pawn={whitePawn} />
-          </div>
-          <div className="h white field">
-            <Pawn pawn={whitePawn} />
-          </div>
-          <div className="i black field">
-            <Pawn pawn={whitePawn} />
-          </div>
-        </div>
+        <div className="board">{boardWithPieces}</div>
       </div>
     );
   }
