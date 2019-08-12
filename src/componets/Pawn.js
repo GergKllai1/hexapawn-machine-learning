@@ -3,7 +3,7 @@ import "./Pawn.css";
 
 const Pawn = props => {
   const pawnImage = props.pawn ? (
-    <img className="pawn" src={props.pawn} alt="pawn" />
+    <img id={props.id} onClick={props.clicked} className="pawn" src={props.pawn} alt="pawn" />
   ) : (
     <></>
   );
