@@ -1,0 +1,43 @@
+.board-container {
+  width: 100wv;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  border: 3px solid black;
+  width: 450px;
+  height: 450px;
+  display: grid;
+  grid-template-rows: 150px 150px 150px;
+  grid-template-columns: 150px 150px 150px;
+  grid-template-areas:
+    "a1 a2 a3"
+    "b1 b2 b3"
+    "c1 c2 c3";
+}
+
+.field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.black {
+  background-color: darkgray;
+}
+
+.white {
+  background-color: ghostwhite;
+}
+
+@media screen and (max-width: 600px) {
+  .board {
+    width: 300px;
+    height: 300px;
+    grid-template-rows: 100px 100px 100px;
+    grid-template-columns: 100px 100px 100px;
+  }
+}
