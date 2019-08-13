@@ -3,6 +3,7 @@ import "./Board.css";
 import whitePawn from "../assets/whitePawn.png";
 import blackPawn from "../assets/blackPawn.png";
 import Square from "../componets/Square";
+import { calculateMovementOptions } from "../helpers/CalculateMovementOptionsHelper";
 
 export class Board extends Component {
   state = {
@@ -37,7 +38,7 @@ export class Board extends Component {
     let nextAvaliableSquares = [];
     if (previouslySelected !== selected) {
       board[selected].selected = true;
-      nextAvaliableSquares = this.calculateMovementOptions(selected, "white");
+      nextAvaliableSquares = calculateMovementOptions(this.state.board, selected, "white");
       nextAvaliableSquares.forEach(square => {
         board[square].avaliable = true;
       });
@@ -48,45 +49,6 @@ export class Board extends Component {
       avaliableSquares: nextAvaliableSquares
     });
   };
-
-  calculateMovementOptions = (location, player) => {
-    const playerRules = {
-      white: { movementOrder: ["c", "b", "a"], enemy: blackPawn },
-      black: { movementOrder: ["a", "b", "c"], enemy: whitePawn }
-    };
-    const locationLetter = location[0];
-    const locationNumber = location[1];
-    const locationLetterIndex = playerRules[player].movementOrder.indexOf(
-      locationLetter
-    );
-    let nextLocationLetter =
-      playerRules[player].movementOrder[locationLetterIndex + 1];
-    const squareToMove = nextLocationLetter + locationNumber;
-    const squaresToHit = [];
-    switch (locationNumber) {
-      case "1":
-      case "3":
-        squaresToHit.push(nextLocationLetter + "2");
-        break;
-      case "2":
-        squaresToHit.push(nextLocationLetter + "1", nextLocationLetter + "3");
-        break;
-      default:
-        console.log("Something went wrong");
-    }
-    
-    const nextLocation = [];
-    if (this.state.board[squareToMove].pawn === null) {
-      nextLocation.push(squareToMove);
-    }
-    squaresToHit.forEach(square => {
-      if (this.state.board[square].pawn === playerRules[player].enemy) {
-        nextLocation.push(square);
-      }
-    });
-    return nextLocation;
-  };
-
   render() {
     const boardArray = [];
     for (let key in this.state.board) {
