@@ -36,13 +36,11 @@ export class Board extends Component {
       });
     }
     let nextAvaliableSquares = [];
-    if (previouslySelected !== selected) {
       board[selected].selected = true;
       nextAvaliableSquares = calculateMovementOptions(this.state.board, selected, "white");
       nextAvaliableSquares.forEach(square => {
         board[square].avaliable = true;
       });
-    }
     this.setState({
       board: board,
       selected: selected,
