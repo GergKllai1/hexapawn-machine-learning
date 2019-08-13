@@ -3,6 +3,7 @@ import "./Board.css";
 import whitePawn from "../assets/whitePawn.png";
 import blackPawn from "../assets/blackPawn.png";
 import Square from "../componets/Square";
+import Pawn from "../componets/Pawn";
 import { calculateMovementOptions } from "../helpers/CalculateMovementOptionsHelper";
 
 export class Board extends Component {
@@ -22,25 +23,34 @@ export class Board extends Component {
     avaliableSquares: []
   };
 
-  handleFieldSelect = e => {
+  handleFieldSelect = location => {
+    debugger;
     const previouslySelected = this.state.selected;
     const previouslyAvailableSquares = [...this.state.avaliableSquares];
-    let selected = e.target.id;
+    let selected = location;
     const board = { ...this.state.board };
     if (previouslySelected) {
       board[previouslySelected].selected = false;
     }
-    if (previouslyAvailableSquares) {
+    if (previouslyAvailableSquares.length > 0) {
       previouslyAvailableSquares.forEach(square => {
+        if (board[square] === selected) {
+          board[previouslySelected].pawn = null;
+          board[square].pawn = whitePawn;
+        }
         board[square].avaliable = false;
       });
     }
     let nextAvaliableSquares = [];
-      board[selected].selected = true;
-      nextAvaliableSquares = calculateMovementOptions(this.state.board, selected, "white");
-      nextAvaliableSquares.forEach(square => {
-        board[square].avaliable = true;
-      });
+    board[selected].selected = true;
+    nextAvaliableSquares = calculateMovementOptions(
+      this.state.board,
+      selected,
+      "white"
+    );
+    nextAvaliableSquares.forEach(square => {
+      board[square].avaliable = true;
+    });
     this.setState({
       board: board,
       selected: selected,
@@ -54,19 +64,17 @@ export class Board extends Component {
     }
     const boardWithPieces = boardArray.map(b => {
       return (
-        <div
-          key={b.location}
-          className={`${b.location} ${b.color} square ${b.selected &&
-            "selected"} ${b.avaliable && "avaliable"} ${b.avaliable &&
-            b.pawn &&
-            "toHit"}`}
-        >
-          <Square
-            clicked={this.handleFieldSelect}
-            id={b.location}
-            pawn={b.pawn}
-          />
-        </div>
+        <Square
+          clicked={this.handleFieldSelect}
+          b={b}
+          // clicked={this.handleFieldSelect}
+          // id={b.location}
+          // key={b.location}
+          // className={`${b.location} ${b.color} square ${b.selected &&
+          //   "selected"} ${b.avaliable && "avaliable"} ${b.avaliable &&
+          //   b.pawn &&
+          //   "toHit"}`}
+        />
       );
     });
     return (

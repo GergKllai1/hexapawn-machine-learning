@@ -1,0 +1,11 @@
+.pawn {
+  height: 100px;
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .pawn {
+    height: 70px;
+    margin: 0;
+  }
+}
