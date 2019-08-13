@@ -1,10 +1,7 @@
-import blackPawn from '../assets/blackPawn.png'
-import whitePawn from '../assets/whitePawn.png'
-
 export const calculateMovementOptions = (board, location, player) => {
   const playerRules = {
-    white: { movementOrder: ["c", "b", "a"], enemy: blackPawn },
-    black: { movementOrder: ["a", "b", "c"], enemy: whitePawn }
+    white: { movementOrder: ["c", "b", "a"], enemy: 'black' },
+    black: { movementOrder: ["a", "b", "c"], enemy: 'white' }
   };
   const locationLetter = location[0];
   const locationNumber = location[1];
