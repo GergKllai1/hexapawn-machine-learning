@@ -3,54 +3,85 @@ import "./Board.css";
 import whitePawn from "../assets/whitePawn.png";
 import blackPawn from "../assets/blackPawn.png";
 import Square from "../componets/Square";
-import Pawn from "../componets/Pawn";
-import { calculateMovementOptions } from "../helpers/CalculateMovementOptionsHelper";
+import { calculateMovementOptions } from "../helpers/calculateMovementOptionsHelper";
 
 export class Board extends Component {
   state = {
     board: {
-      a1: { location: "a1", color: "black", pawn: blackPawn },
-      a2: { location: "a2", color: "white", pawn: blackPawn },
-      a3: { location: "a3", color: "black", pawn: blackPawn },
-      b1: { location: "b1", color: "white", pawn: null },
-      b2: { location: "b2", color: "black", pawn: blackPawn },
-      b3: { location: "b3", color: "white", pawn: null },
-      c1: { location: "c1", color: "black", pawn: whitePawn },
-      c2: { location: "c2", color: "white", pawn: whitePawn },
-      c3: { location: "c3", color: "black", pawn: whitePawn }
+      a1: {
+        location: "a1",
+        color: "black",
+        pawn: blackPawn,
+        pawnName: "blackPawn"
+      },
+      a2: {
+        location: "a2",
+        color: "white",
+        pawn: blackPawn,
+        pawnName: "blackPawn"
+      },
+      a3: {
+        location: "a3",
+        color: "black",
+        pawn: blackPawn,
+        pawnName: "blackPawn"
+      },
+      b1: { location: "b1", color: "white", pawn: null, pawnName: "" },
+      b2: {
+        location: "b2",
+        color: "black",
+        pawn: blackPawn,
+        pawnName: "blackPawn"
+      },
+      b3: { location: "b3", color: "white", pawn: null, pawnName: "" },
+      c1: {
+        location: "c1",
+        color: "black",
+        pawn: whitePawn,
+        pawnName: "whitePawn"
+      },
+      c2: {
+        location: "c2",
+        color: "white",
+        pawn: whitePawn,
+        pawnName: "whitePawn"
+      },
+      c3: {
+        location: "c3",
+        color: "black",
+        pawn: whitePawn,
+        pawnName: "whitePawn"
+      }
     },
     selected: null,
     avaliableSquares: []
   };
 
   handleFieldSelect = location => {
-    debugger;
     const previouslySelected = this.state.selected;
     const previouslyAvailableSquares = [...this.state.avaliableSquares];
     let selected = location;
     const board = { ...this.state.board };
-    if (previouslySelected) {
-      board[previouslySelected].selected = false;
-    }
+    let nextAvaliableSquares = [];
     if (previouslyAvailableSquares.length > 0) {
       previouslyAvailableSquares.forEach(square => {
-        if (board[square] === selected) {
+        if (board[square].location === selected) {
           board[previouslySelected].pawn = null;
+          board[square].pawn = null;
           board[square].pawn = whitePawn;
+          selected = null;
         }
-        board[square].avaliable = false;
       });
     }
-    let nextAvaliableSquares = [];
-    board[selected].selected = true;
-    nextAvaliableSquares = calculateMovementOptions(
-      this.state.board,
-      selected,
-      "white"
-    );
-    nextAvaliableSquares.forEach(square => {
-      board[square].avaliable = true;
-    });
+    if (previouslySelected === selected) {
+      selected = null;
+    } else {
+      nextAvaliableSquares = calculateMovementOptions(
+        this.state.board,
+        selected,
+        "white"
+      );
+    }
     this.setState({
       board: board,
       selected: selected,
@@ -65,15 +96,11 @@ export class Board extends Component {
     const boardWithPieces = boardArray.map(b => {
       return (
         <Square
+          avaliableSquares={this.state.avaliableSquares}
+          selected={this.state.selected}
           clicked={this.handleFieldSelect}
           b={b}
-          // clicked={this.handleFieldSelect}
-          // id={b.location}
-          // key={b.location}
-          // className={`${b.location} ${b.color} square ${b.selected &&
-          //   "selected"} ${b.avaliable && "avaliable"} ${b.avaliable &&
-          //   b.pawn &&
-          //   "toHit"}`}
+          key={b.location}
         />
       );
     });
