@@ -1,7 +1,7 @@
 import React from "react";
-import "./Pawn.css";
+import "./Square.css";
 
-const Pawn = props => {
+const Square = props => {
   const pawnImage = props.pawn ? (
     <img id={props.id} onClick={props.clicked} className="pawn" src={props.pawn} alt="pawn" />
   ) : (
@@ -10,4 +10,4 @@ const Pawn = props => {
   return pawnImage;
 };
 
-export default Pawn;
+export default Square;

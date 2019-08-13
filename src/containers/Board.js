@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Board.css";
 import whitePawn from "../assets/whitePawn.png";
 import blackPawn from "../assets/blackPawn.png";
-import Pawn from "../componets/Pawn";
+import Square from "../componets/Square";
 
 export class Board extends Component {
   state = {
@@ -37,7 +37,7 @@ export class Board extends Component {
     let nextAvaliableSquares = [];
     if (previouslySelected !== selected) {
       board[selected].selected = true;
-      nextAvaliableSquares = this.movementRules(selected);
+      nextAvaliableSquares = this.calculateMovementOptions(selected, "white");
       nextAvaliableSquares.forEach(square => {
         board[square].avaliable = true;
       });
@@ -49,21 +49,18 @@ export class Board extends Component {
     });
   };
 
-  movementRules = location => {
+  calculateMovementOptions = (location, player) => {
+    const playerRules = {
+      white: { movementOrder: ["c", "b", "a"], enemy: blackPawn },
+      black: { movementOrder: ["a", "b", "c"], enemy: whitePawn }
+    };
     const locationLetter = location[0];
     const locationNumber = location[1];
-    let nextLocationLetter = "";
-    const nextLocation = [];
-    switch (locationLetter) {
-      case "c":
-        nextLocationLetter = "b";
-        break;
-      case "b":
-        nextLocationLetter = "a";
-        break;
-      default:
-        console.log("Something went wrong");
-    }
+    const locationLetterIndex = playerRules[player].movementOrder.indexOf(
+      locationLetter
+    );
+    let nextLocationLetter =
+      playerRules[player].movementOrder[locationLetterIndex + 1];
     const squareToMove = nextLocationLetter + locationNumber;
     const squaresToHit = [];
     switch (locationNumber) {
@@ -77,11 +74,13 @@ export class Board extends Component {
       default:
         console.log("Something went wrong");
     }
+    
+    const nextLocation = [];
     if (this.state.board[squareToMove].pawn === null) {
       nextLocation.push(squareToMove);
     }
     squaresToHit.forEach(square => {
-      if (this.state.board[square].pawn === blackPawn) {
+      if (this.state.board[square].pawn === playerRules[player].enemy) {
         nextLocation.push(square);
       }
     });
@@ -102,7 +101,7 @@ export class Board extends Component {
             b.pawn &&
             "toHit"}`}
         >
-          <Pawn
+          <Square
             clicked={this.handleFieldSelect}
             id={b.location}
             pawn={b.pawn}
