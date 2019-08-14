@@ -4,10 +4,11 @@ import Pawn from "./Pawn";
 
 const Square = props => {
   const onClickHandler = () => {
-    props.clicked(props.b.location, props.b.pawnName);
+    props.clicked(props.b.location);
   };
   const { location, color, pawn } = props.b;
-  const selected = props.selected === props.b.location;
+  const selected =
+    props.selected === props.b.location && props.avaliableSquares.length > 0;
   const avaliable = props.avaliableSquares.includes(props.b.location);
   return (
     <div
@@ -18,7 +19,7 @@ const Square = props => {
         pawn &&
         "toHit"}`}
     >
-      <Pawn clicked={onClickHandler} pawn={pawn} />
+      <Pawn pawn={pawn} />
     </div>
   );
 };

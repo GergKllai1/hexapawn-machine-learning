@@ -59,12 +59,14 @@ export class Board extends Component {
         if (board[square].location === selected) {
           board[previouslySelected].pawn = null;
           board[square].pawn = null;
-          board[square].pawn = 'white';
+          board[square].pawn = "white";
           selected = null;
         }
       });
-    }
-    if (previouslySelected === selected) {
+    } else if (
+      previouslySelected === selected ||
+      board[selected].pawn === null
+    ) {
       selected = null;
     } else {
       nextAvaliableSquares = calculateMovementOptions(

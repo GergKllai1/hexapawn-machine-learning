@@ -23,7 +23,6 @@ export const calculateMovementOptions = (board, location, player) => {
     default:
       console.log("Something went wrong");
   }
-  debugger;
   const nextLocation = [];
   if (board[squareToMove].pawn === null) {
     nextLocation.push(squareToMove);
