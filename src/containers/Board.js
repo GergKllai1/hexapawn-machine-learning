@@ -2,24 +2,31 @@ import React, { Component } from "react";
 import "./Board.css";
 import Square from "../componets/Square";
 import { move } from "../helpers/moveHelper";
-import board from './BoardState';
+import createBoardArray from "../helpers/boardArrayHelper";
+import { createInitialBoardState } from "../helpers/boardStateHelper";
+import isTheGameEnded from "../helpers/gameStatusHelper";
 
 export class Board extends Component {
   state = {
-    board: board,
+    board: createInitialBoardState(),
     selected: null,
-    avaliableSquares: []
+    avaliableSquares: [],
+    round: 0,
+    playerWon: 0,
+    aiWon: 0
   };
 
-  handleFieldSelect = location => {
+  handleFieldSelect = (location) => {
     const payload = move(location, this.state);
+    const gameStatus = isTheGameEnded(payload.board, "white");
+    if (gameStatus === "win") {
+      payload.playerWon = this.state.playerWon + 1;
+      payload.board = createInitialBoardState();
+    }
     this.setState(payload);
   };
   render() {
-    const boardArray = [];
-    for (let key in this.state.board) {
-      boardArray.push(this.state.board[key]);
-    }
+    const boardArray = createBoardArray(this.state.board);
     const boardWithPieces = boardArray.map(b => {
       return (
         <Square
@@ -33,6 +40,16 @@ export class Board extends Component {
     });
     return (
       <div className="board-container">
+        <div>
+          <div className="game-counter">
+            <p>Games won by player:</p>
+            <p>{this.state.playerWon}</p>
+          </div>
+          <div className="game-counter">
+            <p>Games won by AI:</p>
+            <p>{this.state.aiWon}</p>
+          </div>
+        </div>
         <div className="board">{boardWithPieces}</div>
       </div>
     );

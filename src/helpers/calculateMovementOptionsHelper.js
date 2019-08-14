@@ -1,8 +1,6 @@
-export const calculateMovementOptions = (board, location, player) => {
-  const playerRules = {
-    white: { movementOrder: ["c", "b", "a"], enemy: 'black' },
-    black: { movementOrder: ["a", "b", "c"], enemy: 'white' }
-  };
+import { playerRules } from "./boardStateHelper";
+
+const calculateMovementOptions = (board, location, player) => {
   const locationLetter = location[0];
   const locationNumber = location[1];
   const locationLetterIndex = playerRules[player].movementOrder.indexOf(
@@ -34,3 +32,5 @@ export const calculateMovementOptions = (board, location, player) => {
   });
   return nextLocation;
 };
+
+export default calculateMovementOptions;
