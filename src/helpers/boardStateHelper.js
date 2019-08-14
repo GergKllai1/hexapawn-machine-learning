@@ -39,6 +39,6 @@ export const board = {
 };
 
 export const playerRules = {
-  white: { movementOrder: ["c", "b", "a"], enemy: 'black' },
-  black: { movementOrder: ["a", "b", "c"], enemy: 'white' }
+  white: { movementOrder: ["c", "b", "a"], enemy: 'black', win: 'a' },
+  black: { movementOrder: ["a", "b", "c"], enemy: 'white', win: 'c' }
 };

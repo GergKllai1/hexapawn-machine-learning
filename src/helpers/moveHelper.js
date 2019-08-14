@@ -1,4 +1,4 @@
-import { calculateMovementOptions } from "./calculateMovementOptionsHelper";
+import  calculateMovementOptions  from "./calculateMovementOptionsHelper";
 
 export const move = (location, state) => {
   const previouslySelected = state.selected;

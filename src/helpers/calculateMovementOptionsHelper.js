@@ -1,6 +1,6 @@
-import { playerRules } from "../containers/BoardState";
+import { playerRules } from "./boardStateHelper";
 
-export const calculateMovementOptions = (board, location, player) => {
+const calculateMovementOptions = (board, location, player) => {
   const locationLetter = location[0];
   const locationNumber = location[1];
   const locationLetterIndex = playerRules[player].movementOrder.indexOf(
@@ -32,3 +32,5 @@ export const calculateMovementOptions = (board, location, player) => {
   });
   return nextLocation;
 };
+
+export default calculateMovementOptions;

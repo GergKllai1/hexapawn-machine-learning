@@ -3,7 +3,8 @@ import "./Board.css";
 import Square from "../componets/Square";
 import { move } from "../helpers/moveHelper";
 import createBoardArray from "../helpers/boardArrayHelper";
-import { board } from "./BoardState";
+import { board } from "../helpers/boardStateHelper";
+import isTheGameEnded from "../helpers/gameStatusHelper";
 
 export class Board extends Component {
   state = {
@@ -14,6 +15,8 @@ export class Board extends Component {
 
   handleFieldSelect = location => {
     const payload = move(location, this.state);
+    const ended = isTheGameEnded(payload.board, "white");
+    console.log(ended)
     this.setState(payload);
   };
   render() {
