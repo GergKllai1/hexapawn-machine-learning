@@ -10,13 +10,15 @@ export class Board extends Component {
   state = {
     board: board,
     selected: null,
-    avaliableSquares: []
+    avaliableSquares: [],
+    gameStatus: "unresolved",
+    round: 0
   };
 
   handleFieldSelect = location => {
     const payload = move(location, this.state);
-    const ended = isTheGameEnded(payload.board, "white");
-    console.log(ended)
+    const gameStatus = isTheGameEnded(payload.board, "white");
+    payload.gameStatus = gameStatus;
     this.setState(payload);
   };
   render() {
