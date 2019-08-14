@@ -1,8 +1,6 @@
+import { playerRules } from "../containers/BoardState";
+
 export const calculateMovementOptions = (board, location, player) => {
-  const playerRules = {
-    white: { movementOrder: ["c", "b", "a"], enemy: 'black' },
-    black: { movementOrder: ["a", "b", "c"], enemy: 'white' }
-  };
   const locationLetter = location[0];
   const locationNumber = location[1];
   const locationLetterIndex = playerRules[player].movementOrder.indexOf(

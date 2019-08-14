@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./Board.css";
 import Square from "../componets/Square";
 import { move } from "../helpers/moveHelper";
-import board from './BoardState';
+import createBoardArray from "../helpers/boardArrayHelper";
+import { board } from "./BoardState";
 
 export class Board extends Component {
   state = {
@@ -16,10 +17,7 @@ export class Board extends Component {
     this.setState(payload);
   };
   render() {
-    const boardArray = [];
-    for (let key in this.state.board) {
-      boardArray.push(this.state.board[key]);
-    }
+    const boardArray = createBoardArray(this.state.board);
     const boardWithPieces = boardArray.map(b => {
       return (
         <Square

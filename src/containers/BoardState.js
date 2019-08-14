@@ -1,4 +1,4 @@
-const board = {
+export const board = {
   a1: {
     location: "a1",
     color: "black",
@@ -38,4 +38,7 @@ const board = {
   }
 };
 
-export default board;
+export const playerRules = {
+  white: { movementOrder: ["c", "b", "a"], enemy: 'black' },
+  black: { movementOrder: ["a", "b", "c"], enemy: 'white' }
+};
