@@ -1,9 +1,17 @@
 .board-container {
-  width: 100wv;
+  width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
+}
+
+.game-counter {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
 }
 
 .board {
@@ -19,12 +27,19 @@
     "c1 c2 c3";
 }
 
-
+@media screen and (max-width: 1024px) {
+  .board-container {
+    height: 75vh;
+  }
+}
 @media screen and (max-width: 600px) {
   .board {
     width: 300px;
     height: 300px;
     grid-template-rows: 100px 100px 100px;
     grid-template-columns: 100px 100px 100px;
+  }
+  .game-counter {
+    width: 200px;
   }
 }

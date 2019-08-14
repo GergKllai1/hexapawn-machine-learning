@@ -3,22 +3,26 @@ import "./Board.css";
 import Square from "../componets/Square";
 import { move } from "../helpers/moveHelper";
 import createBoardArray from "../helpers/boardArrayHelper";
-import { board } from "../helpers/boardStateHelper";
+import { createInitialBoardState } from "../helpers/boardStateHelper";
 import isTheGameEnded from "../helpers/gameStatusHelper";
 
 export class Board extends Component {
   state = {
-    board: board,
+    board: createInitialBoardState(),
     selected: null,
     avaliableSquares: [],
-    gameStatus: "unresolved",
-    round: 0
+    round: 0,
+    playerWon: 0,
+    aiWon: 0
   };
 
-  handleFieldSelect = location => {
+  handleFieldSelect = (location) => {
     const payload = move(location, this.state);
     const gameStatus = isTheGameEnded(payload.board, "white");
-    payload.gameStatus = gameStatus;
+    if (gameStatus === "win") {
+      payload.playerWon = this.state.playerWon + 1;
+      payload.board = createInitialBoardState();
+    }
     this.setState(payload);
   };
   render() {
@@ -36,6 +40,16 @@ export class Board extends Component {
     });
     return (
       <div className="board-container">
+        <div>
+          <div className="game-counter">
+            <p>Games won by player:</p>
+            <p>{this.state.playerWon}</p>
+          </div>
+          <div className="game-counter">
+            <p>Games won by AI:</p>
+            <p>{this.state.aiWon}</p>
+          </div>
+        </div>
         <div className="board">{boardWithPieces}</div>
       </div>
     );
