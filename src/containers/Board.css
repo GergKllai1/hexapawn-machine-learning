@@ -19,19 +19,6 @@
     "c1 c2 c3";
 }
 
-.field {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.black {
-  background-color: darkgray;
-}
-
-.white {
-  background-color: ghostwhite;
-}
 
 @media screen and (max-width: 600px) {
   .board {

@@ -1,30 +1,34 @@
 import React, { Component } from "react";
 import "./Board.css";
-import whitePawn from "../assets/whitePawn.png";
-import blackPawn from "../assets/blackPawn.png";
-import Pawn from "../componets/Pawn";
+import Square from "../componets/Square";
+import { move } from "../helpers/moveHelper";
+import board from './BoardState';
 
 export class Board extends Component {
   state = {
-    board: [
-      { location: "a1", color: "black", pawn: blackPawn },
-      { location: "a2", color: "white", pawn: blackPawn },
-      { location: "a3", color: "black", pawn: blackPawn },
-      { location: "b1", color: "white", pawn: null },
-      { location: "b2", color: "black", pawn: null },
-      { location: "b3", color: "white", pawn: null },
-      { location: "c1", color: "black", pawn: whitePawn },
-      { location: "c2", color: "white", pawn: whitePawn },
-      { location: "c3", color: "black", pawn: whitePawn }
-    ]
+    board: board,
+    selected: null,
+    avaliableSquares: []
   };
 
+  handleFieldSelect = location => {
+    const payload = move(location, this.state);
+    this.setState(payload);
+  };
   render() {
-    const boardWithPieces = this.state.board.map(b => {
+    const boardArray = [];
+    for (let key in this.state.board) {
+      boardArray.push(this.state.board[key]);
+    }
+    const boardWithPieces = boardArray.map(b => {
       return (
-        <div className={`${b.location} ${b.color} field `}>
-          <Pawn pawn={b.pawn} />
-        </div>
+        <Square
+          avaliableSquares={this.state.avaliableSquares}
+          selected={this.state.selected}
+          clicked={this.handleFieldSelect}
+          b={b}
+          key={b.location}
+        />
       );
     });
     return (
