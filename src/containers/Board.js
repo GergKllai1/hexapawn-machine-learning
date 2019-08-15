@@ -18,22 +18,40 @@ export class Board extends Component {
 
   handleFieldSelect = location => {
     const payload = playerMove(location, this.state);
-    const gameStatus = isTheGameEnded(payload.board, "white");
-    if (gameStatus === "win") {
-      payload.playerWon = this.state.playerWon + 1;
-      payload.board = createInitialBoardState();
-      payload.round = 1
-    }
-    else if (payload.round % 2 === 0) {
+    const playerStatus = isTheGameEnded(payload.board, "white");
+    let aiStatus;
+    if (playerStatus !== "unresolved") {
+      this.increaseWinCount(payload, playerStatus, "white");
+      this.resetBoard(payload);
+    } else if (payload.round % 2 === 0) {
       const ai = aiMove(payload.board);
       const pieceToMove = Object.keys(ai)[0];
       const squareToMove = Object.values(ai)[0];
       payload.board[pieceToMove].pawn = null;
       payload.board[squareToMove].pawn = "black";
+      aiStatus = isTheGameEnded(payload.board, "black");
       payload.round++;
+      if (aiStatus !== "unresolved") {
+        debugger;
+        this.increaseWinCount(payload, playerStatus, "black");
+        this.resetBoard(payload);
+      }
     }
     this.setState(payload);
   };
+
+  resetBoard = payload => {
+    payload.board = createInitialBoardState();
+    payload.round = 1;
+  };
+
+  increaseWinCount = (payload, gameStatus, player) => {
+    (player === "white" && gameStatus === "win") ||
+    (player === "black" && gameStatus === "lost")
+      ? (payload.playerWon = this.state.playerWon + 1)
+      : (payload.playerWon = this.state.playerWon + 1);
+  };
+
   render() {
     const boardArray = createBoardArray(this.state.board);
     const boardWithPieces = boardArray.map(b => {
