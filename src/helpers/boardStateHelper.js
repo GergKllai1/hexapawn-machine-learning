@@ -19,7 +19,7 @@ export const createInitialBoardState = () => {
     b2: {
       location: "b2",
       color: "black",
-      pawn: "black"
+      pawn: null
     },
     b3: { location: "b3", color: "white", pawn: null },
     c1: {

@@ -16,7 +16,7 @@ export const playerMove = (location, state) => {
         board[square].pawn = null;
         board[square].pawn = "white";
         selected = null;
-        round = round + 1;
+        round++;
         endMove = true;
       }
     });

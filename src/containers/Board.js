@@ -22,8 +22,16 @@ export class Board extends Component {
     if (gameStatus === "win") {
       payload.playerWon = this.state.playerWon + 1;
       payload.board = createInitialBoardState();
+      payload.round = 1
     }
-    aiMove(payload.board);
+    else if (payload.round % 2 === 0) {
+      const ai = aiMove(payload.board);
+      const pieceToMove = Object.keys(ai)[0];
+      const squareToMove = Object.values(ai)[0];
+      payload.board[pieceToMove].pawn = null;
+      payload.board[squareToMove].pawn = "black";
+      payload.round++;
+    }
     this.setState(payload);
   };
   render() {
