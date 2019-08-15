@@ -1,4 +1,4 @@
-import  calculateMovementOptions  from "./calculateMovementOptionsHelper";
+import calculateMovementOptions from "./calculateMovementOptionsHelper";
 
 export const move = (location, state) => {
   const previouslySelected = state.selected;
@@ -7,7 +7,7 @@ export const move = (location, state) => {
   const board = { ...state.board };
   let nextAvaliableSquares = [];
   let endMove = false;
-  let round = state.round
+  let round = state.round;
   if (previouslyAvailableSquares.length > 0) {
     previouslyAvailableSquares.forEach(square => {
       if (board[square].location === selected) {
@@ -15,7 +15,7 @@ export const move = (location, state) => {
         board[square].pawn = null;
         board[square].pawn = "white";
         selected = null;
-        round = round + 1
+        round = round + 1;
         endMove = true;
       }
     });
@@ -23,7 +23,7 @@ export const move = (location, state) => {
   if (!endMove) {
     if (previouslySelected === selected || board[selected].pawn === null) {
       selected = null;
-    } else {
+    } else if (board[selected].pawn === "white") {
       nextAvaliableSquares = calculateMovementOptions(
         state.board,
         selected,
