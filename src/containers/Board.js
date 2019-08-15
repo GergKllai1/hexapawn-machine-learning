@@ -18,8 +18,11 @@ export class Board extends Component {
 
   handleFieldSelect = location => {
     const payload = playerMove(location, this.state);
-    const playerStatus = isTheGameEnded(payload.board, "white");
-    let aiStatus;
+    let playerStatus = "unresolved";
+    let aiStatus = "unresolved";
+    if (payload.round > this.state.round) {
+      playerStatus = isTheGameEnded(payload.board, "white");
+    }
     if (playerStatus !== "unresolved") {
       this.increaseWinCount(payload, playerStatus, "white");
       this.resetBoard(payload);
@@ -32,8 +35,7 @@ export class Board extends Component {
       aiStatus = isTheGameEnded(payload.board, "black");
       payload.round++;
       if (aiStatus !== "unresolved") {
-        debugger;
-        this.increaseWinCount(payload, playerStatus, "black");
+        this.increaseWinCount(payload, aiStatus, "black");
         this.resetBoard(payload);
       }
     }
@@ -46,10 +48,16 @@ export class Board extends Component {
   };
 
   increaseWinCount = (payload, gameStatus, player) => {
-    (player === "white" && gameStatus === "win") ||
-    (player === "black" && gameStatus === "lost")
-      ? (payload.playerWon = this.state.playerWon + 1)
-      : (payload.playerWon = this.state.playerWon + 1);
+    if (player === "white") {
+      gameStatus === "win"
+        ? (payload.playerWon = this.state.playerWon + 1)
+        : (payload.aiWon = this.state.aiWon + 1);
+    }
+    if (player === "black") {
+      gameStatus === "win"
+        ? (payload.aiWon = this.state.aiWon + 1)
+        : (payload.playerWon = this.state.playerWon + 1);
+    }
   };
 
   render() {

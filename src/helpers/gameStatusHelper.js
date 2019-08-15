@@ -10,6 +10,7 @@ const isTheGameEnded = (board, player) => {
     if (b.pawn === player) {
       if (b.location[0] === playerRules[player].win) {
         gameStatus = "win";
+        console.log(player, b.location);
       } else if (gameStatus === "unresolved") {
         const availableMoves = calculateMovementOptions(
           board,
@@ -20,9 +21,11 @@ const isTheGameEnded = (board, player) => {
       }
     }
   });
-  if ((gameStatus ==='unresolved' && allavailableMoves.length === 0)) {
+  if (gameStatus === "unresolved" && allavailableMoves.length === 0) {
     gameStatus = "lost";
   }
+  gameStatus !== 'unresolved' && console.log(board)
+  console.log(player, gameStatus);
   return gameStatus;
 };
 
