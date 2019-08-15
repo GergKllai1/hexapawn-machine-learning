@@ -16,13 +16,14 @@ export class Board extends Component {
     aiWon: 0
   };
 
-  handleFieldSelect = (location) => {
+  handleFieldSelect = location => {
     const payload = playerMove(location, this.state);
     const gameStatus = isTheGameEnded(payload.board, "white");
     if (gameStatus === "win") {
       payload.playerWon = this.state.playerWon + 1;
       payload.board = createInitialBoardState();
     }
+    aiMove(payload.board);
     this.setState(payload);
   };
   render() {

@@ -40,14 +40,30 @@ export const playerMove = (location, state) => {
   };
 };
 
-export const aiMove = (board) => {
-  const availableAiMoves = {};
+export const aiMove = board => {
+  const allAvailableAiMoves = {};
   const boardArray = createBoardArray(board);
   boardArray.forEach(b => {
-    if(b.pawn === 'black') {
-      const availableMoves = calculateMovementOptions(board, b.location, 'black')
-      availableAiMoves[b.location] = availableMoves
+    if (b.pawn === "black") {
+      const availableMoves = calculateMovementOptions(
+        board,
+        b.location,
+        "black"
+      );
+      if (availableMoves.length > 0) {
+        allAvailableAiMoves[b.location] = availableMoves;
+      }
     }
-  })
-  return availableAiMoves
-}
+  });
+  const availablePieces = Object.keys(allAvailableAiMoves);
+  const selectedPiece = randomize(availablePieces)
+  const availabledMoves = allAvailableAiMoves[selectedPiece];
+  const selectedMove = randomize(availabledMoves);
+  const finalAiMove = {[selectedPiece]: selectedMove};
+  return finalAiMove;
+};
+
+const randomize = array => {
+  const randomNumber = Math.floor(Math.random() * array.length)
+  return array[randomNumber]
+};
