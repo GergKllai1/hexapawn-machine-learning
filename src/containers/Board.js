@@ -20,26 +20,24 @@ export class Board extends Component {
     const payload = playerMove(location, this.state);
     let playerStatus = "unresolved";
     let aiStatus = "unresolved";
-    playerStatus = isTheGameEnded(payload.board, "white", "black");
-    console.log("white");
-    console.log(payload.board, playerStatus);
-    if (playerStatus !== "unresolved") {
-      this.increaseWinCount(payload, playerStatus, "white");
-      this.resetBoard(payload);
-    } else if (payload.round % 2 === 0) {
+    if (payload.round % 2 === 0) {
       aiStatus = isTheGameEnded(payload.board, "black", "white");
-      console.log("black");
-      console.log(payload.board, aiStatus);
       if (aiStatus !== "unresolved") {
         this.increaseWinCount(payload, aiStatus, "black");
         this.resetBoard(payload);
+      } else {
+        const ai = aiMove(payload.board);
+        const pieceToMove = Object.keys(ai)[0];
+        const squareToMove = Object.values(ai)[0];
+        payload.board[pieceToMove].pawn = null;
+        payload.board[squareToMove].pawn = "black";
+        payload.round++;
+        playerStatus = isTheGameEnded(payload.board, "white", "black");
+        if (playerStatus !== "unresolved") {
+          this.increaseWinCount(payload, playerStatus, "white");
+          this.resetBoard(payload);
+        }
       }
-      const ai = aiMove(payload.board);
-      const pieceToMove = Object.keys(ai)[0];
-      const squareToMove = Object.values(ai)[0];
-      payload.board[pieceToMove].pawn = null;
-      payload.board[squareToMove].pawn = "black";
-      payload.round++;
     }
     this.setState(payload);
   };
