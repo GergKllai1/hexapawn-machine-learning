@@ -8,14 +8,14 @@ const Square = props => {
   };
   const { location, color, pawn } = props.b;
   const selected =
-    props.selected === props.b.location && props.avaliableSquares.length > 0;
-  const avaliable = props.avaliableSquares.includes(props.b.location);
+    props.selected === props.b.location && props.availableSquares.length > 0;
+  const available = props.availableSquares.includes(props.b.location);
   return (
     <div
       onClick={onClickHandler}
       name={location}
       className={`${location} ${color} square ${selected &&
-        "selected"} ${avaliable && "avaliable"} ${avaliable &&
+        "selected"} ${available && "available"} ${available &&
         pawn &&
         "toHit"}`}
     >
