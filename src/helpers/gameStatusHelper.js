@@ -4,23 +4,23 @@ import { playerRules } from "./boardStateHelper";
 
 const isTheGameEnded = (board, player) => {
   const boardArray = createBoardArray(board);
-  let allAvaliableMoves = [];
+  let allavailableMoves = [];
   let gameStatus = "unresolved";
   boardArray.forEach(b => {
     if (b.pawn === player) {
       if (b.location[0] === playerRules[player].win) {
         gameStatus = "win";
       } else if (gameStatus === "unresolved") {
-        const avaliableMoves = calculateMovementOptions(
+        const availableMoves = calculateMovementOptions(
           board,
           b.location,
           player
         );
-        allAvaliableMoves = allAvaliableMoves.concat(avaliableMoves);
+        allavailableMoves = allavailableMoves.concat(availableMoves);
       }
     }
   });
-  if ((gameStatus ==='unresolved' && allAvaliableMoves.length === 0)) {
+  if ((gameStatus ==='unresolved' && allavailableMoves.length === 0)) {
     gameStatus = "lost";
   }
   return gameStatus;

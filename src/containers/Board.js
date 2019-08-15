@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Board.css";
 import Square from "../componets/Square";
-import { move } from "../helpers/moveHelper";
+import { playerMove, aiMove } from "../helpers/moveHelper";
 import createBoardArray from "../helpers/boardArrayHelper";
 import { createInitialBoardState } from "../helpers/boardStateHelper";
 import isTheGameEnded from "../helpers/gameStatusHelper";
@@ -10,14 +10,14 @@ export class Board extends Component {
   state = {
     board: createInitialBoardState(),
     selected: null,
-    avaliableSquares: [],
-    round: 0,
+    availableSquares: [],
+    round: 1,
     playerWon: 0,
     aiWon: 0
   };
 
   handleFieldSelect = (location) => {
-    const payload = move(location, this.state);
+    const payload = playerMove(location, this.state);
     const gameStatus = isTheGameEnded(payload.board, "white");
     if (gameStatus === "win") {
       payload.playerWon = this.state.playerWon + 1;
@@ -30,7 +30,7 @@ export class Board extends Component {
     const boardWithPieces = boardArray.map(b => {
       return (
         <Square
-          avaliableSquares={this.state.avaliableSquares}
+          availableSquares={this.state.availableSquares}
           selected={this.state.selected}
           clicked={this.handleFieldSelect}
           b={b}
