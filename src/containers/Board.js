@@ -22,7 +22,7 @@ export class Board extends Component {
     const payload = playerMove(location, this.state);
     let winner = "";
     if (payload.round % 2 === 0) {
-      winner = isTheGameEnded(payload.board);
+      winner = isTheGameEnded(payload.board, "black", "white");
       if (winner !== "unresolved") {
         this.increaseWinCount(payload, winner);
         this.gameOver(winner);
@@ -36,7 +36,7 @@ export class Board extends Component {
         winner = isTheGameEnded(payload.board, "white", "black");
         if (winner !== "unresolved") {
           this.increaseWinCount(payload, winner);
-          this.setState({ gameOver: true });
+          this.gameOver(winner);
         }
       }
     }
@@ -44,9 +44,10 @@ export class Board extends Component {
   };
 
   gameOver = winner => {
+    const formattedWinner = winner[0].toUpperCase() + winner.slice(1);
     this.setState({
       gameOver: true,
-      winner: winner
+      winner: formattedWinner
     });
   };
 
@@ -80,23 +81,30 @@ export class Board extends Component {
     });
     return (
       <div className="board-container">
+        <div className="board">{boardWithPieces}</div>
         <div>
-          <div className="game-counter">
-            <p>Games won by player:</p>
-            <p>{this.state.playerWon}</p>
-          </div>
-          <div className="game-counter">
-            <p>Games won by AI:</p>
-            <p>{this.state.aiWon}</p>
-          </div>
-          {this.state.gameOver && (
-            <div>
-              <h1>GAME OVER</h1>
-              <button onClick={this.resetBoard}>New Game</button>
+          {this.state.gameOver ? (
+            <div className="game-over-container">
+              <h3 className="game-over">Game Over</h3>
+              <p className="game-over"> {this.state.winner} won!</p>
+              <button className="game-over-button" onClick={this.resetBoard}>
+                New Game
+              </button>
             </div>
+          ) : (
+            <>
+              {" "}
+              <div className="game-counter">
+                <p>Games won by player:</p>
+                <p>{this.state.playerWon}</p>
+              </div>
+              <div className="game-counter">
+                <p>Games won by AI:</p>
+                <p>{this.state.aiWon}</p>
+              </div>
+            </>
           )}
         </div>
-        <div className="board">{boardWithPieces}</div>
       </div>
     );
   }
