@@ -13,7 +13,8 @@ export class Board extends Component {
     availableSquares: [],
     round: 1,
     playerWon: 0,
-    aiWon: 0
+    aiWon: 0,
+    gameOver: false
   };
 
   handleFieldSelect = location => {
@@ -24,7 +25,7 @@ export class Board extends Component {
       aiStatus = isTheGameEnded(payload.board, "black", "white");
       if (aiStatus !== "unresolved") {
         this.increaseWinCount(payload, aiStatus, "black");
-        this.resetBoard(payload);
+        this.setState({ gameOver: true });
       } else {
         const ai = aiMove(payload.board);
         const pieceToMove = Object.keys(ai)[0];
@@ -35,7 +36,7 @@ export class Board extends Component {
         playerStatus = isTheGameEnded(payload.board, "white", "black");
         if (playerStatus !== "unresolved") {
           this.increaseWinCount(payload, playerStatus, "white");
-          this.resetBoard(payload);
+          this.setState({ gameOver: true });
         }
       }
     }
@@ -43,8 +44,11 @@ export class Board extends Component {
   };
 
   resetBoard = payload => {
-    payload.board = createInitialBoardState();
-    payload.round = 1;
+    this.setState({
+      board: createInitialBoardState(),
+      round: 1,
+      gameOver: false
+    });
   };
 
   increaseWinCount = (payload, gameStatus, player) => {
@@ -84,6 +88,12 @@ export class Board extends Component {
             <p>Games won by AI:</p>
             <p>{this.state.aiWon}</p>
           </div>
+          {this.state.gameOver && (
+            <div>
+              <h1>GAME OVER</h1>
+              <button onClick={this.resetBoard}>New Game</button>
+            </div>
+          )}
         </div>
         <div className="board">{boardWithPieces}</div>
       </div>
