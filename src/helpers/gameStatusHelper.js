@@ -2,33 +2,46 @@ import createBoardArray from "./boardArrayHelper";
 import calculateMovementOptions from "./calculateMovementOptionsHelper";
 import { playerRules } from "./boardStateHelper";
 
-const isTheGameEnded = (board, player, enemy) => {
+const isTheGameEnded = (board) => {
   const boardArray = createBoardArray(board);
-  let allavAilableMoves = [];
-  let gameStatus = "unresolved";
+  let allAvailableMovesForWhite = [];
+  let allAvilableMovesForBlack = [];
+  let winner = "unresolved";
   boardArray.forEach(b => {
-    if (b.pawn === enemy) {
-      if (b.location[0] === playerRules[enemy].win) {
-        gameStatus = "lost";
-      }
-    }
-    if (gameStatus === "unresolved" && b.pawn === player) {
-      if (b.location[0] === playerRules[player].win) {
-        gameStatus = "win";
-      } else if (gameStatus === "unresolved") {
-        const availableMoves = calculateMovementOptions(
-          board,
-          b.location,
-          player
-        );
-        allavAilableMoves = allavAilableMoves.concat(availableMoves);
-      }
+    if (b.pawn === 'white' && b.location[0] === playerRules["white"].win) {
+      winner = "white";
+    } else if (
+      winner === "unresolved" &&
+      b.pawn === 'black' &&
+      b.location[0] === playerRules["black"].win
+    ) {
+      winner = "black";
+    } else if (winner === "unresolved" && b.pawn === "white") {
+      const availableMoves = calculateMovementOptions(
+        board,
+        b.location,
+        'white'
+      );
+      allAvailableMovesForWhite = allAvailableMovesForWhite.concat(
+        availableMoves
+      );
+    } else if (winner === "unresolved" && b.pawn === "black") {
+      const availableMoves = calculateMovementOptions(
+        board,
+        b.location,
+        'black'
+      );
+      allAvilableMovesForBlack = allAvilableMovesForBlack.concat(
+        availableMoves
+      );
     }
   });
-  if (gameStatus === "unresolved" && allavAilableMoves.length === 0) {
-    gameStatus = "lost";
+  if (winner === "unresolved" && allAvailableMovesForWhite.length === 0) {
+    winner = "black";
+  } else if (winner === "unresolved" && allAvilableMovesForBlack.length === 0) {
+    winner = "white";
   }
-  return gameStatus;
+  return winner;
 };
 
 export default isTheGameEnded;
