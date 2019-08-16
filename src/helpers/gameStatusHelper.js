@@ -5,17 +5,17 @@ import { playerRules } from "./boardStateHelper";
 const isTheGameEnded = (board, player, enemy) => {
   const boardArray = createBoardArray(board);
   let allavAilableMoves = [];
-  let gameStatus = "unresolved";
+  let winner = "unresolved";
   boardArray.forEach(b => {
     if (b.pawn === enemy) {
       if (b.location[0] === playerRules[enemy].win) {
-        gameStatus = "lost";
+        winner = enemy;
       }
     }
-    if (gameStatus === "unresolved" && b.pawn === player) {
+    if (winner === "unresolved" && b.pawn === player) {
       if (b.location[0] === playerRules[player].win) {
-        gameStatus = "win";
-      } else if (gameStatus === "unresolved") {
+        winner = player;
+      } else if (winner === "unresolved") {
         const availableMoves = calculateMovementOptions(
           board,
           b.location,
@@ -25,10 +25,11 @@ const isTheGameEnded = (board, player, enemy) => {
       }
     }
   });
-  if (gameStatus === "unresolved" && allavAilableMoves.length === 0) {
-    gameStatus = "lost";
+  if (winner === "unresolved" && allavAilableMoves.length === 0) {
+    winner = enemy;
   }
-  return gameStatus;
+  return winner;
 };
+
 
 export default isTheGameEnded;

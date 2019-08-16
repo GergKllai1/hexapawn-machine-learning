@@ -14,6 +14,26 @@
   margin: 10px 0px;
 }
 
+.game-over-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-over {
+  text-align: center;
+  margin: 5px 0px;
+}
+
+.game-over-button {
+  padding: 10px;
+  background: linear-gradient(gray, darkgray);
+  border-radius: 20px;
+  margin: 10px 0px;
+  font-size: 120%;
+  cursor: pointer;
+}
+
 .board {
   border: 3px solid black;
   width: 450px;
