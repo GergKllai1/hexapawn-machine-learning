@@ -16,7 +16,8 @@ export class Board extends Component {
     aiWon: 0,
     gameOver: false,
     winner: "",
-    gameHistory: []
+    gameHistory: [],
+    losingMoves: []
   };
 
   handleFieldSelect = location => {
@@ -53,12 +54,18 @@ export class Board extends Component {
     });
   };
 
-  resetBoard = payload => {
+  resetBoard = () => {
+    let updatedLosingMoves = [...this.state.losingMoves];
+    if (this.state.winner === "White") {
+      updatedLosingMoves.push(this.state.gameHistory);
+    }
     this.setState({
       board: createInitialBoardState(),
       round: 1,
       gameOver: false,
-      winner: ""
+      winner: "",
+      losingMoves: updatedLosingMoves,
+      gameHistory: []
     });
   };
 
