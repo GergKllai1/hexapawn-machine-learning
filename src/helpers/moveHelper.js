@@ -45,21 +45,41 @@ export const playerMove = (location, state) => {
   };
 };
 
-export const aiMove = payload => {
+export const aiMove = (payload, losingMoves) => {
   const allAvailableAiMoves = {};
   const boardArray = createBoardArray(payload.board);
+  let losingMatches = [];
+  let currentGame = payload.gameHistory;
+  losingMatches = losingMoves.filter(lostMatch =>
+    lostMatch.join("").includes(currentGame.join(""))
+  );
+
   boardArray.forEach(b => {
     if (b.pawn === "black") {
-      const availableMoves = calculateMovementOptions(
+      let availableMoves = calculateMovementOptions(
         payload.board,
         b.location,
         "black"
       );
       if (availableMoves.length > 0) {
-        allAvailableAiMoves[b.location] = availableMoves;
+        losingMatches.forEach(lostMatch => {
+          let nextMove = lostMatch[currentGame.length];
+          let lastMove = lostMatch[currentGame.length + 2] ? false : true
+          if (nextMove && lastMove) {
+            if (nextMove.slice(0, 2) === b.location) {
+              availableMoves = availableMoves.filter(
+                el => el !== nextMove.slice(2, 4)
+              );
+            }
+          }
+        });
+        if (availableMoves.length > 0) {
+          allAvailableAiMoves[b.location] = availableMoves;
+        }
       }
     }
   });
+  console.log(allAvailableAiMoves);
   const availablePieces = Object.keys(allAvailableAiMoves);
   const selectedPiece = randomize(availablePieces);
   const availabledMoves = allAvailableAiMoves[selectedPiece];

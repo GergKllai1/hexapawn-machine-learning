@@ -29,7 +29,7 @@ export class Board extends Component {
         this.increaseWinCount(payload, winner);
         this.gameOver(winner);
       } else {
-        const ai = aiMove(payload);
+        const ai = aiMove(payload, this.state.losingMoves);
         const pieceToMove = Object.keys(ai)[0];
         const squareToMove = Object.values(ai)[0];
         payload.board[pieceToMove].pawn = null;
