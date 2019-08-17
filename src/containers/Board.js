@@ -15,7 +15,8 @@ export class Board extends Component {
     playerWon: 0,
     aiWon: 0,
     gameOver: false,
-    winner: ""
+    winner: "",
+    gameHistory: []
   };
 
   handleFieldSelect = location => {
@@ -27,11 +28,12 @@ export class Board extends Component {
         this.increaseWinCount(payload, winner);
         this.gameOver(winner);
       } else {
-        const ai = aiMove(payload.board);
+        const ai = aiMove(payload);
         const pieceToMove = Object.keys(ai)[0];
         const squareToMove = Object.values(ai)[0];
         payload.board[pieceToMove].pawn = null;
         payload.board[squareToMove].pawn = "black";
+        payload.gameHistory.push(pieceToMove + squareToMove);
         payload.round++;
         winner = isTheGameEnded(payload.board, "white", "black");
         if (winner !== "unresolved") {
