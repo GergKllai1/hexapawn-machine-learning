@@ -25,7 +25,7 @@ const LoadGame = () => {
   });
   return (
     <div className="loadgame">
-      {gamesToLoad.lenght > 0 ? gamesToLoad : `No games have been added yet!`}
+      {gamesToLoad.length > 0 ? gamesToLoad : `No games have been added yet!`}
     </div>
   );
 };
