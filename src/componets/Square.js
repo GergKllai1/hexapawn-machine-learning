@@ -4,7 +4,7 @@ import Pawn from "./Pawn";
 
 const Square = props => {
   const onClickHandler = () => {
-    props.clicked(props.b.location);
+    props.disabled || props.clicked(props.b.location);
   };
   const { location, color, pawn } = props.b;
   const selected =

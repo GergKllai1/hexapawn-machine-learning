@@ -17,7 +17,8 @@ export class Board extends Component {
     gameOver: false,
     winner: "",
     gameHistory: [],
-    losingMoves: []
+    losingMoves: [],
+    disableMove: false
   };
 
   handleFieldSelect = location => {
@@ -50,7 +51,8 @@ export class Board extends Component {
     const formattedWinner = winner[0].toUpperCase() + winner.slice(1);
     this.setState({
       gameOver: true,
-      winner: formattedWinner
+      winner: formattedWinner,
+      disableMove: true
     });
   };
 
@@ -65,7 +67,8 @@ export class Board extends Component {
       gameOver: false,
       winner: "",
       losingMoves: updatedLosingMoves,
-      gameHistory: []
+      gameHistory: [],
+      disableMove: false
     });
   };
 
@@ -80,6 +83,7 @@ export class Board extends Component {
     const boardWithPieces = boardArray.map(b => {
       return (
         <Square
+          disabled={this.state.disableMove}
           availableSquares={this.state.availableSquares}
           selected={this.state.selected}
           clicked={this.handleFieldSelect}
@@ -102,7 +106,6 @@ export class Board extends Component {
             </div>
           ) : (
             <>
-              {" "}
               <div className="game-counter">
                 <p>Games won by player:</p>
                 <p>{this.state.playerWon}</p>
