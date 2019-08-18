@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./Board.css";
-import Square from "../componets/Square";
-import { playerMove, aiMove } from "../helpers/moveHelper";
-import createBoardArray from "../helpers/boardArrayHelper";
-import { createInitialBoardState } from "../helpers/boardStateHelper";
-import isTheGameEnded from "../helpers/gameStatusHelper";
+import Square from "../../componets/Board/Square/Square";
+import { playerMove, aiMove } from "../../helpers/moveHelper";
+import createBoardArray from "../../helpers/boardArrayHelper";
+import { createInitialBoardState } from "../../helpers/boardStateHelper";
+import isTheGameEnded from "../../helpers/gameStatusHelper";
 import axios from "axios";
 
 export class Board extends Component {

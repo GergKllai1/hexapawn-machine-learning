@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+import './HomeScreen.css'
+
 const HomeScreen = () => {
   return (
-    <div>
-      <Link to='/board'>New Game</Link>
+    <div className='homescreen'>
+      <Link className='homescreen-button' to='/board'>New Game</Link>
     </div>
   )
 }

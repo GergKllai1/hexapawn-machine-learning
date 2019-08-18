@@ -1,0 +1,22 @@
+.homescreen{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.homescreen-button {
+  padding: 20px 50px;
+  background: linear-gradient(gray, darkgray);
+  border-radius: 10px;
+  font-size: 120%;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.homescreen-button:hover{
+  font-weight: bold;
+  background: gray
+}

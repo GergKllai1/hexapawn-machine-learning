@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 
-import Board from '../containers/Board';
-import HomeScreen from './HomeScreen';
+import Board from '../containers/Board/Board';
+import HomeScreen from './HomeScreen/HomeScreen';
 
 const Layout = () => {
   return (

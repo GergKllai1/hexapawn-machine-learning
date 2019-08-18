@@ -1,6 +1,6 @@
 import React from "react";
 import "./Square.css";
-import Pawn from "./Pawn";
+import Pawn from "./Pawn/Pawn";
 
 const Square = props => {
   const onClickHandler = () => {
