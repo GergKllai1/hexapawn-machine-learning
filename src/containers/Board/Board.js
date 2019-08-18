@@ -27,8 +27,9 @@ export class Board extends Component {
     axios
       .get(`/losing-moves/${this.state.id}.json`)
       .then(response => {
+        const lm = response.data.losingMoves ? response.data.losingMoves : []
         this.setState({
-          losingMoves: response.data.losingMoves,
+          losingMoves: lm,
           aiWon: response.data.aiWon,
           playerWon: response.data.playerWon
         });
