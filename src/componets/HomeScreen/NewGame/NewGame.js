@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const NewGame = () => {
+import './NewGame.css'
+
+
+const NewGame = props => {
   const [name, setName] = useState("");
 
   const handleChange = e => {
@@ -10,16 +13,17 @@ const NewGame = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const id = name + '-' + Math.floor(Math.random() * 9999);
+    const id = name + '-' + Date.now();
     axios.put(`/losing-moves/${id}.json`, {
       aiWon: 0,
       losingMoves: [],
       playerWon: 0
     });
+    props.history.push(`/board/${id}`)
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='new-game' onSubmit={handleSubmit}>
       <label>Enter Name:</label>
       <input onChange={handleChange} required type="text" />
       <button>Start</button>

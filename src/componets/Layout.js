@@ -10,7 +10,7 @@ const Layout = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path='/' component={HomeScreen} />
-        <Route path='/board' component={Board}/>
+        <Route path='/board/:id' component={Board}/>
         <Route path='/new-game' component={NewGame} />
       </Switch>
     </BrowserRouter>
