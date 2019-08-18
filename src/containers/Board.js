@@ -15,7 +15,10 @@ export class Board extends Component {
     playerWon: 0,
     aiWon: 0,
     gameOver: false,
-    winner: ""
+    winner: "",
+    gameHistory: [],
+    losingMoves: [],
+    disableMove: false
   };
 
   handleFieldSelect = location => {
@@ -27,11 +30,12 @@ export class Board extends Component {
         this.increaseWinCount(payload, winner);
         this.gameOver(winner);
       } else {
-        const ai = aiMove(payload.board);
+        const ai = aiMove(payload, this.state.losingMoves);
         const pieceToMove = Object.keys(ai)[0];
         const squareToMove = Object.values(ai)[0];
         payload.board[pieceToMove].pawn = null;
         payload.board[squareToMove].pawn = "black";
+        payload.gameHistory.push(pieceToMove + squareToMove);
         payload.round++;
         winner = isTheGameEnded(payload.board, "white", "black");
         if (winner !== "unresolved") {
@@ -47,16 +51,24 @@ export class Board extends Component {
     const formattedWinner = winner[0].toUpperCase() + winner.slice(1);
     this.setState({
       gameOver: true,
-      winner: formattedWinner
+      winner: formattedWinner,
+      disableMove: true
     });
   };
 
-  resetBoard = payload => {
+  resetBoard = () => {
+    let updatedLosingMoves = [...this.state.losingMoves];
+    if (this.state.winner === "White") {
+      updatedLosingMoves.push(this.state.gameHistory);
+    }
     this.setState({
       board: createInitialBoardState(),
       round: 1,
       gameOver: false,
-      winner: ""
+      winner: "",
+      losingMoves: updatedLosingMoves,
+      gameHistory: [],
+      disableMove: false
     });
   };
 
@@ -71,6 +83,7 @@ export class Board extends Component {
     const boardWithPieces = boardArray.map(b => {
       return (
         <Square
+          disabled={this.state.disableMove}
           availableSquares={this.state.availableSquares}
           selected={this.state.selected}
           clicked={this.handleFieldSelect}
@@ -93,7 +106,6 @@ export class Board extends Component {
             </div>
           ) : (
             <>
-              {" "}
               <div className="game-counter">
                 <p>Games won by player:</p>
                 <p>{this.state.playerWon}</p>
