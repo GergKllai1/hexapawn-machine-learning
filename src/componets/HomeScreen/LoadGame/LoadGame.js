@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 
+import './LoadGame.css'
+
 const LoadGame = () => {
   const [games, setGames] = useState([]);
   useEffect(() => {
@@ -16,13 +18,13 @@ const LoadGame = () => {
     const date = new Date(parseInt(game.split("-")[1]));
     const formattedDate = date.toLocaleString();
     return (
-      <Link to={`/board/${game}`}>
-        <h4>{name}</h4>
-        <h5>{formattedDate}</h5>
+      <Link className='load-links-container' to={`/board/${game}`}>
+        <h2 className='load-link'>{name}</h2>
+        <h5 className='load-link'>{formattedDate}</h5>
       </Link>
     );
   });
-  return <div>{gamesToLoad}</div>;
+  return <div className='loadgame'>{gamesToLoad}</div>;
 };
 
 export default LoadGame;
