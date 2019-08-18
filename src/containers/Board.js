@@ -5,6 +5,7 @@ import { playerMove, aiMove } from "../helpers/moveHelper";
 import createBoardArray from "../helpers/boardArrayHelper";
 import { createInitialBoardState } from "../helpers/boardStateHelper";
 import isTheGameEnded from "../helpers/gameStatusHelper";
+import axios from "axios";
 
 export class Board extends Component {
   state = {
@@ -20,6 +21,21 @@ export class Board extends Component {
     losingMoves: [],
     disableMove: false
   };
+
+  componentDidMount() {
+    axios
+      .get("/losing-moves.json")
+      .then(response => {
+        this.setState({
+          losingMoves: response.data.losingMoves,
+          aiWon: response.data.aiWon,
+          playerWon: response.data.playerWon
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
 
   handleFieldSelect = location => {
     const payload = playerMove(location, this.state);
@@ -56,11 +72,20 @@ export class Board extends Component {
     });
   };
 
-  resetBoard = () => {
+  resetBoard = async () => {
     let updatedLosingMoves = [...this.state.losingMoves];
     if (this.state.winner === "White") {
       updatedLosingMoves.push(this.state.gameHistory);
+      axios.put(
+        "/losing-moves.json",
+        {
+          losingMoves: updatedLosingMoves,
+          aiWon: this.state.aiWon,
+          playerWon: this.state.playerWon
+        }
+      );
     }
+
     this.setState({
       board: createInitialBoardState(),
       round: 1,
