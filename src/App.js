@@ -1,8 +1,8 @@
 import React from "react";
-import Board from "./containers/Board";
+import Layout from "./componets/Layout";
 
 const App = () => {
-  return <Board />;
+  return <Layout />;
 };
 
 export default App;
