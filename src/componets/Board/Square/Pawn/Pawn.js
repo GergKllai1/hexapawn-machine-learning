@@ -1,7 +1,7 @@
 import React from "react";
 import "./Pawn.css";
-import whitePawn from "../assets/whitePawn.png";
-import blackPawn from "../assets/blackPawn.png";
+import whitePawn from "../../../../assets/whitePawn.png";
+import blackPawn from "../../../../assets/blackPawn.png";;
 
 
 const Pawn = props => {

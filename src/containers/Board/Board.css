@@ -26,7 +26,8 @@
 }
 
 .game-over-button {
-  padding: 10px;
+  color: white;
+  padding: 10px 20px;
   background: linear-gradient(gray, darkgray);
   border-radius: 20px;
   margin: 10px 0px;
@@ -34,6 +35,10 @@
   cursor: pointer;
 }
 
+.game-over-button:hover{
+  font-weight: bold;
+  background: gray;
+}
 .board {
   border: 3px solid black;
   width: 450px;

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./Board.css";
-import Square from "../componets/Square";
-import { playerMove, aiMove } from "../helpers/moveHelper";
-import createBoardArray from "../helpers/boardArrayHelper";
-import { createInitialBoardState } from "../helpers/boardStateHelper";
-import isTheGameEnded from "../helpers/gameStatusHelper";
+import Square from "../../componets/Board/Square/Square";
+import { playerMove, aiMove } from "../../helpers/moveHelper";
+import createBoardArray from "../../helpers/boardArrayHelper";
+import { createInitialBoardState } from "../../helpers/boardStateHelper";
+import isTheGameEnded from "../../helpers/gameStatusHelper";
 import axios from "axios";
 
 export class Board extends Component {
@@ -19,12 +19,13 @@ export class Board extends Component {
     winner: "",
     gameHistory: [],
     losingMoves: [],
-    disableMove: false
+    disableMove: false,
+    id: this.props.match.url.split('/').pop()
   };
 
   componentDidMount() {
     axios
-      .get("/losing-moves.json")
+      .get(`/losing-moves/${this.state.id}.json`)
       .then(response => {
         this.setState({
           losingMoves: response.data.losingMoves,
@@ -77,7 +78,7 @@ export class Board extends Component {
     if (this.state.winner === "White") {
       updatedLosingMoves.push(this.state.gameHistory);
       axios.put(
-        "/losing-moves.json",
+        `/losing-moves/${this.state.id}.json`,
         {
           losingMoves: updatedLosingMoves,
           aiWon: this.state.aiWon,
