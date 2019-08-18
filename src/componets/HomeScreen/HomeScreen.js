@@ -15,10 +15,10 @@ const HomeScreen = () => {
         </Link>
       </div>
       <div className="text-area">
-        <h3>In this game the rules are simple:</h3>
+        <h3>Rules</h3>
         <p>
           You move as with pawns in chess! <br />
-          You win by eliminating all the enemys pieces or preventing the enemy
+          You win by eliminating all the enemy's pieces, preventing the enemy
           from making a legitimate move or bringing a pawn to the enemy's front
           line
         </p>
