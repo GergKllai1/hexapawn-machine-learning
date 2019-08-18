@@ -19,12 +19,13 @@ export class Board extends Component {
     winner: "",
     gameHistory: [],
     losingMoves: [],
-    disableMove: false
+    disableMove: false,
+    id: this.props.match.url.split('/').pop()
   };
 
   componentDidMount() {
     axios
-      .get("/losing-moves.json")
+      .get(`/losing-moves/${this.state.id}.json`)
       .then(response => {
         this.setState({
           losingMoves: response.data.losingMoves,
@@ -77,7 +78,7 @@ export class Board extends Component {
     if (this.state.winner === "White") {
       updatedLosingMoves.push(this.state.gameHistory);
       axios.put(
-        "/losing-moves.json",
+        `/losing-moves/${this.state.id}.json`,
         {
           losingMoves: updatedLosingMoves,
           aiWon: this.state.aiWon,
