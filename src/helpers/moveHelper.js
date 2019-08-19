@@ -41,7 +41,9 @@ export const playerMove = (location, state) => {
     selected: selected,
     availableSquares: nextavailableSquares,
     round: round,
-    gameHistory: gameHistory
+    gameHistory: gameHistory,
+    aiWon: state.aiWon,
+    playerWon: state.playerWon
   };
 };
 
