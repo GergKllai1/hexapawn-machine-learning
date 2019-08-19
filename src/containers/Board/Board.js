@@ -20,14 +20,14 @@ export class Board extends Component {
     gameHistory: [],
     losingMoves: [],
     disableMove: false,
-    id: this.props.match.url.split('/').pop()
+    id: this.props.match.url.split("/").pop()
   };
 
   componentDidMount() {
     axios
       .get(`/losing-moves/${this.state.id}.json`)
       .then(response => {
-        const lm = response.data.losingMoves ? response.data.losingMoves : []
+        const lm = response.data.losingMoves ? response.data.losingMoves : [];
         this.setState({
           losingMoves: lm,
           aiWon: response.data.aiWon,
@@ -46,7 +46,7 @@ export class Board extends Component {
       winner = isTheGameEnded(payload.board, "black", "white");
       if (winner !== "unresolved") {
         this.increaseWinCount(payload, winner);
-        this.gameOver(winner);
+        this.gameOver(winner, payload);
       } else {
         const ai = aiMove(payload, this.state.losingMoves);
         const pieceToMove = Object.keys(ai)[0];
@@ -58,42 +58,39 @@ export class Board extends Component {
         winner = isTheGameEnded(payload.board, "white", "black");
         if (winner !== "unresolved") {
           this.increaseWinCount(payload, winner);
-          this.gameOver(winner);
+          this.gameOver(winner, payload);
         }
       }
     }
     this.setState(payload);
   };
 
-  gameOver = winner => {
+  gameOver = (winner, payload) => {
+    let updatedLosingMoves = [...this.state.losingMoves];
+    if (winner === "white") {
+      updatedLosingMoves.push(payload.gameHistory);
+      axios.put(`/losing-moves/${this.state.id}.json`, {
+        losingMoves: updatedLosingMoves,
+        aiWon: payload.aiWon,
+        playerWon: payload.playerWon
+      });
+    }
+
     const formattedWinner = winner[0].toUpperCase() + winner.slice(1);
     this.setState({
       gameOver: true,
       winner: formattedWinner,
+      losingMoves: updatedLosingMoves,
       disableMove: true
     });
   };
 
-  resetBoard = async () => {
-    let updatedLosingMoves = [...this.state.losingMoves];
-    if (this.state.winner === "White") {
-      updatedLosingMoves.push(this.state.gameHistory);
-      axios.put(
-        `/losing-moves/${this.state.id}.json`,
-        {
-          losingMoves: updatedLosingMoves,
-          aiWon: this.state.aiWon,
-          playerWon: this.state.playerWon
-        }
-      );
-    }
-
+  resetBoard = () => {
     this.setState({
       board: createInitialBoardState(),
       round: 1,
       gameOver: false,
       winner: "",
-      losingMoves: updatedLosingMoves,
       gameHistory: [],
       disableMove: false
     });
