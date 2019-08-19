@@ -69,13 +69,12 @@ export class Board extends Component {
     let updatedLosingMoves = [...this.state.losingMoves];
     if (winner === "white") {
       updatedLosingMoves.push(payload.gameHistory);
-      axios.put(`/losing-moves/${this.state.id}.json`, {
-        losingMoves: updatedLosingMoves,
-        aiWon: payload.aiWon,
-        playerWon: payload.playerWon
-      });
     }
-
+    axios.put(`/losing-moves/${this.state.id}.json`, {
+      losingMoves: updatedLosingMoves,
+      aiWon: payload.aiWon,
+      playerWon: payload.playerWon
+    });
     const formattedWinner = winner[0].toUpperCase() + winner.slice(1);
     this.setState({
       gameOver: true,
