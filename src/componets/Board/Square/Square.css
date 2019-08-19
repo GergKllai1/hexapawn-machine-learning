@@ -1,0 +1,25 @@
+.square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.black {
+  background-color: darkgray;
+}
+
+.white {
+  background-color: ghostwhite;
+}
+
+.selected {
+  border: 10px rgb(34, 134, 4) solid;
+}
+
+.available {
+  border: 10px rgb(231, 250, 60) solid;
+}
+
+.toHit {
+  border: 10px rgb(241, 13, 13) solid;
+}

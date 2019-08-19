@@ -1,0 +1,55 @@
+.homescreen {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.homescreen-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-area {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footnotes-area {
+  width: 100%;
+  text-align: center;
+}
+.footnote {
+  margin: 3px 0px;
+}
+
+.homescreen-button {
+  padding: 20px 50px;
+  margin: 0px 25px;
+  background: linear-gradient(gray, darkgray);
+  border-radius: 10px;
+  font-size: 120%;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.homescreen-button:hover {
+  font-weight: bold;
+  background: gray;
+}
+
+@media screen and (max-width: 600px) {
+  .homescreen-button  {
+    padding: 15px 30px;
+    font-size: 100%;
+    margin: 0px 15px;
+  }
+}
